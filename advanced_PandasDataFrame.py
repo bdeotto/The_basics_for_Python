@@ -336,6 +336,38 @@ print ('df_C[\'éxito\'].where(df_C[\'éxito\']==0,\'pass\')',
         .mask(df_C['éxito']==0,'fail')==\
         df_A['éxito'].where(df_A['éxito']==1,other='fail')\
         .where(df_A['éxito']==0,other='pass')).head(),sep='')
+print ('np.where(df_A[\'éxito\']==1,\'pass\',\'fail\'):\n',\
+        np.where(df_A['éxito']==1,'pass','fail'),sep='')
 df_A['pass_fail']=np.where(df_A['éxito']==1,'pass','fail')
 print ('df_A[\'pass_fail\']=np.where(df_A[\'éxito\']==1,\'pass\',\'fail\'):\n',\
         df_A,sep='')
+next=input('¿Seguir? q para salir')
+if 'q' in list(next): quit()
+print ('_____pd.DataFrame: .rolling (agregados móviles) ______________________')
+df_AM=pd.DataFrame({'valores':[1,2,2,3,3,4,5,4,5,6,5,4,2,2,3,4,5,6,4,3,3]})
+df_AM.loc[4,'valores']=np.nan
+df_AM['SM3backwards']=df_AM['valores'].rolling(3).sum() # por defecto, hacia atrás
+df_AM['SM3']=df_AM['valores'].rolling(3,center=True).sum()
+df_AM['SM4']=df_AM['valores'].rolling(4,center=True).sum() # con valores pares, centro adelantado
+df_AM['SM5min3']=df_AM['valores'].rolling(5,min_periods=3,center=True).sum()
+df_AM['SM5']=df_AM['valores'].rolling(5,center=True).mean()
+df_AM['SM5ponderada']=df_AM['valores'].\
+            rolling(window=[1,2,2,2,1],win_type='boxcar',center=True).mean() # media móvil ponderada
+print ('df_AM:\n',df_AM,sep='')
+next=input('¿Seguir? q para salir')
+if 'q' in list(next): quit()
+print ('_____pd.DataFrame: string methods ____________________________________')
+print ('len(df_A[\'I_puntuación\']):\n',len(df_A['I_puntuación']),sep='')
+print ('df_A[\'I_puntuación\'].str.len():\n',
+        df_A['I_puntuación'].str.len().head(),sep='')
+print ('df_A[\'I_puntuación\'].str.capitalize():\n',
+        df_A['I_puntuación'].str.capitalize().head(),sep='')
+print ('df_A[\'I_puntuación\'].str.upper():\n',
+        df_A['I_puntuación'].str.upper().head(),sep='')
+print ('df_A[\'I_puntuación\'].str[0]:\n',
+        df_A['I_puntuación'].str[0].head(),sep='')
+print ('df_A.index.str[:2]:\n',df_A.index.str[:2],sep='')
+print ('df_A[\'edad\'].astype(str).str[-1]:\n',
+        df_A['edad'].astype(str).str[-1].head(),sep='') # sobre una serie numérica, primero .astype(str)
+print ('df_A[df_A.columns[df_A.columns.str.contains(\'edad\')]].head():\n',
+        df_A[df_A.columns[df_A.columns.str.contains('edad')]].head(),sep='')

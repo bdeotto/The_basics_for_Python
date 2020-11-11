@@ -19,6 +19,8 @@ print ('df.tail():\n',df.tail(),sep='') # 5 últimas filas
 print ('df.tail(3):\n',df.tail(3),sep='') # n últimas filas
 print ('df.sample():\n',df.sample(),sep='') # una fila aleatoria
 print ('df.sample(3):\n',df.sample(3),sep='') # n filas aleatorias
+print ('df.info():\n')
+print (df.info())
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
 print ('_____pd.DataFrame: índices, cols, orden, valores y valores únicos ____')
@@ -46,7 +48,7 @@ print ('df.loc[[\'v2\',\'v5\'],[\'serie3\',\'serie4\']]:\n',\
         df.loc[['v2','v5'],['serie3','serie4']],sep='') # Recuperar submatriz por enumeracion de filas y columnas
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
-print ('_____pd.DataFrame: añadir y sobreescribir ____________________________')
+print ('_____pd.DataFrame: añadir, sobreescribir y remplazar _________________')
 print ('df.loc[\'v1\',\'serie2\']:',df.loc['v1','serie2'])
 df.loc['v1','serie2']='yoko' # sobreescribe celdas. Permanente
 print ('df.loc[\'v1\',\'serie2\']=\'yoko\'; df.loc[\'v1\',\'serie2\']:',\
@@ -60,6 +62,11 @@ df['serie5']=pd.Series(aux,index=['v'+str(i) for i in range(1,len(aux)+1)]) # a�
 print ('df[\'serie5\']=col.nueva:\n',df.head(),sep='')
 df['serie6']=1001 # Nueva columna con un valor repetido: rellena la serie
 print ('df[\'serie6\']=1001:\n',df.head(),sep='')
+print ('df.replace(15,999):\n',df.replace(15,999).head(),sep='') # Admite inplace=True
+print ('df.replace([15,np.nan],999):\n',\
+        df.replace([15,np.nan],999).head(),sep='') # Admite inplace=True
+print ('df.replace([15,np.nan],[999,\'sin confirmar\']):\n',\
+        df.replace([15,np.nan],[999,'sin confirmar']).head(),sep='') # Admite inplace=True
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
 print ('_____pd.DataFrame: añadir con .assing() ______________________________')

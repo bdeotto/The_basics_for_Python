@@ -33,7 +33,7 @@ print ('Animals[[\'bicho2\',\'bicho4\']]:\n',\
 print ('Animals[\'bicho2\':\'bicho4\']:\n',Animals['bicho2':'bicho4'],sep='') # [:] recupera valores por rango
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
-print ('_____pd.Series. añadir y sobreescribir (.iloc[],.loc[],[]) ___________')
+print ('_____pd.Series. añadir, sobreescribir, remplazar ___________')
 #Animals.iloc[5]='tortuga' # Falla (fuera de rango): no sirve para añadir valores
 Animals.iloc[2]='ballena' # .iloc[] para sobreescribir valor por posición
 print ('Animals.iloc[2]=\'ballena\':\n',Animals,sep='')
@@ -43,6 +43,12 @@ Animals.loc['bicho5']='perezoso' # .loc[] para sobreescribir valor por índice
 print ('Animals.loc[\'bicho5\']=\'perezoso\':\n',Animals,sep='')
 Animals['bicho6']='avestruz' # [] para añadir o sobreescribir por índice
 print ('Animals[\'bicho6\']=\'avestruz\':\n', Animals,sep='')
+print ('Animals.replace(\'ballena\',\'erizo\'):\n',\
+        Animals.replace('ballena','erizo'),sep='') # no permanente. Admite inplace=True
+print ('Animals.replace([\'ballena\',\'avestruz\'],\'erizo\'):\n',\
+        Animals.replace(['ballena','avestruz'],'erizo'),sep='') # no permanente
+print ('Animals.replace([\'ballena\',\'avestruz\'],[\'erizo\',\'canguro\']):\n',\
+        Animals.replace(['ballena','avestruz'],['erizo','canguro']),sep='') # no permanente
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
 print ('_____pd.Series. drop y truncate ______________________________________')
@@ -180,7 +186,7 @@ import math
 try: print (math.sqrt(s))
 except: print ('No es posible aplicar directamente math.sqrt a una serie')
 print ('s.apply(math.sqrt):\n',s.apply(math.sqrt),sep='') # apply para aplicar funciones y métodos sobre pd.Series y df. No permanente
-# apply, applymap y map no son métodos vectorizados: mucho más lentos que las funciones incorporads en Pandas
+# apply, applymap y map no son métodos vectorizados: mucho más lentos
 s_par=s.apply(lambda x: 'par' if x%2==0 else 'impar') # sobre la serie (devuelve índices)
 print ('s.apply(lambda x: \'par\' if x%2==0 else \'impar\'):\n',s_par,sep='')
 s_par=s.map(lambda x: 'par' if x%2==0 else 'impar') # sobre la serie (devuelve índices)
