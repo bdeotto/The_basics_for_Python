@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import scipy
 import seaborn as sns
 plt.style.use('seaborn')
+parametro_plot=0 # (0:desactivados, 1: activados)
 
 ### Usado para línea de comentarios
 # En principio de linea, para evitar ejecución
@@ -57,14 +58,14 @@ PT_T_Viajes=df[(df['Magnitud']=='Valor absoluto')&(df['Concepto']=='Viajes')]\
 print ('PT_T_Viajes:\n',PT_T_Viajes,sep='')
 #PT_T_Viajes[PT_T_Viajes.columns[:-1]].plot() # plot sin linea de Total (distorsiona)
 print ('Diagramas de cajas y bigotes _________________________________________')
-sns.set_theme(style='whitegrid')
+if parametro_plot==1: sns.set_theme(style='whitegrid')
 df_sns=PT_T_Viajes.reset_index() # para representar cajas y bigotes, las series relevantes no pueden ser índices
-sns.boxplot(x=df_sns['Trimestre'],y=df_sns['Asturias'])
-plt.show()
+if parametro_plot==1: sns.boxplot(x=df_sns['Trimestre'],y=df_sns['Asturias'])
+if parametro_plot==1: plt.show()
 df_sns_T1T2=df_sns[(df_sns['Trimestre']=='T1')|(df_sns['Trimestre']=='T2')]
 print ('df_sns_T1T2:\n',df_sns_T1T2,sep='')
-sns.boxplot(x=df_sns_T1T2['Año'],y=df_sns_T1T2['Asturias'],palette='Blues')
-plt.show()
+if parametro_plot==1: sns.boxplot(x=df_sns_T1T2['Año'],y=df_sns_T1T2['Asturias'],palette='Blues')
+if parametro_plot==1: plt.show()
 print ('______________________________________________________________________')
 ### Pivot table de proporción de cada CCAA sobre el gasto total en cada periodo:
 PT_Distribucion_Viajes=df[(df['Magnitud']=='Distribución porcentual')\
@@ -158,6 +159,12 @@ print ('media_I_estacionalidad:',media_I_estacionalidad)
 df_Viajes['S_desestacionalizada_print']=df_Viajes['S_desestacionalizada']\
                                         *df_Viajes['Tendencia5'].mean()
 print ('df_Viajes:\n',df_Viajes,sep='')
-df_Viajes.set_index(['Año','Trimestre'])\
+if parametro_plot==1: df_Viajes.set_index(['Año','Trimestre'])\
         [['Valor','Tendencia5','S_desestacionalizada_print']].plot()
-plt.show()
+if parametro_plot==1: plt.show()
+print ('Pruebas ______________________________________________________________')
+print (df_Viajes['Trimestre'].nunique())
+Trimestres=df_Viajes['Trimestre'].unique()
+print (len(Trimestres))
+L_Trimestres=['T1','T2']
+print (df_Viajes[df_Viajes['Trimestre'].isin(L_Trimestres)])

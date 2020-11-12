@@ -135,6 +135,8 @@ print ('df.drop(\'serie2\',axis=1)>=12:\n',\
         (df.drop('serie2',axis=1)>=12).head(),sep='') # máscara sobre un df (excluida columna de strings)
 print ('df[df.drop(\'serie2\',axis=1)>=12]:\n',\
         df[df.drop('serie2',axis=1)>=12].head(),sep='')
+print ('df[df[\'serie2\'].isin([\'lola\',\'bea\'])]:\n',\
+        df[df['serie2'].isin(['lola','bea'])],sep='') # .isin() para seleccionar elementos de una lista
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
 print ('_____pd.DataFrame: modificar índices _________________________________')

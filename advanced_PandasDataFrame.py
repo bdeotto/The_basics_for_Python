@@ -147,9 +147,9 @@ print ('pd.cut(df_A[\'puntuación\'],[0,25,50,75,100]):\n',\
 print ('pd.cut(df_A[\'puntuación\'],[0,25,50,75,100]).value_counts():\n',\
         pd.cut(df_A['puntuación'],[0,25,50,75,100]).value_counts(),sep='')
 df_A['I_puntuación']=pd.cut(df_A['puntuación'],\
-                     [0,25,50,75,100],labels={'D','C','B','A'}) # columna nueva con edad en intervalos
+                     [0,25,50,75,100],labels=['D','C','B','A']) # columna nueva con edad en intervalos
 print ('df_A[\'I_puntuación\']=pd.cut(df_A[\'puntuación\'],'
-        '[0,25,50,75,100],labels={\'D\',\'C\',\'B\',\'A\'}):\n',df_A,sep='')
+        '[0,25,50,75,100],labels=[\'D\',\'C\',\'B\',\'A\']):\n',df_A,sep='')
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
 print ('_____pd.DataFrame: agregación de datos (.groupby()) __________________')
@@ -353,6 +353,11 @@ df_AM['SM5min3']=df_AM['valores'].rolling(5,min_periods=3,center=True).sum()
 df_AM['SM5']=df_AM['valores'].rolling(5,center=True).mean()
 df_AM['SM5ponderada']=df_AM['valores'].\
             rolling(window=[1,2,2,2,1],win_type='boxcar',center=True).mean() # media móvil ponderada
+df_AM['valores-1']=df_AM['valores']\
+                .rolling(window=[1,0,],min_periods=1,win_type='boxcar').sum() # serie retrasada un periodo, con ceros en lugar de algunos nan
+df_AM['valores-2']=np.nan # establece valores iniciales para que funcione la asignación celda a celda (a continuación)
+for i in range(2,len(df_AM['valores'])):
+    df_AM['valores-2'].iloc[i]=df_AM['valores'].iloc[i-2] # serie retrasada dos periodos. Menos eficiente que con rolling, más exacto (respeta nan), y sirve con strings
 print ('df_AM:\n',df_AM,sep='')
 next=input('¿Seguir? q para salir')
 if 'q' in list(next): quit()
